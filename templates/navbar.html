@@ -1,0 +1,215 @@
+<nav class="navbar">
+    <div class="navbar-container">
+        <!-- Logo -->
+        <a href="{% url 'home' %}" class="navbar-logo">LOGO</a>
+        
+        <!-- Left Menu -->
+        <ul class="navbar-menu">
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'rooms' %}">Rooms</a></li>
+            {% if user.is_authenticated %}
+            <li><a href="{% url 'create-room' %}">Create Room</a></li>
+            {% endif %}
+        </ul>
+        
+        <!-- Right Side: Search & Auth -->
+        <div class="navbar-right">
+            <!-- Search Form -->
+            <form class="navbar-search" method="GET" action="{% url 'home' %}">
+                <input type="text" name="q" placeholder="Search..." value="{{ request.GET.q }}">
+                <button type="submit">🔍</button>
+            </form>
+            
+            <!-- Authentication Section -->
+            <div class="navbar-auth">
+                {% if user.is_authenticated %}
+                    <!-- User Info & Logout -->
+                    <div class="user-menu">
+                        <span class="username">Welcome, {{ user.username }}</span>
+                        <form action="{% url 'logout' %}" method="POST" class="logout-form">
+                            {% csrf_token %}
+                            <button type="submit" class="btn-logout">Logout</button>
+                        </form>
+                    </div>
+                {% else %}
+                    <!-- Login & Register Links -->
+                    <div class="auth-links">
+                        <a href="{% url 'login' %}" class="btn-login">Login</a>
+                        <a href="{% url 'register' %}" class="btn-register">Register</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</nav>
+
+<style>
+.navbar {
+    background: #2c3e50;
+    color: white;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.navbar-logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+}
+
+.navbar-menu {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar-menu a {
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: background 0.3s;
+}
+
+.navbar-menu a:hover {
+    background: rgba(255,255,255,0.1);
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.navbar-search {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.navbar-search input {
+    padding: 0.5rem;
+    border: none;
+    border-radius: 4px;
+    min-width: 200px;
+}
+
+.navbar-search button {
+    padding: 0.5rem 1rem;
+    background: #3498db;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.navbar-search button:hover {
+    background: #2980b9;
+}
+
+.navbar-auth {
+    display: flex;
+    align-items: center;
+}
+
+.auth-links {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.btn-login, .btn-register, .btn-logout {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 0.9rem;
+    display: inline-block;
+    text-align: center;
+}
+
+.btn-login {
+    background: #3498db;
+    color: white;
+}
+
+.btn-login:hover {
+    background: #2980b9;
+}
+
+.btn-register {
+    background: #2ecc71;
+    color: white;
+}
+
+.btn-register:hover {
+    background: #27ae60;
+}
+
+.btn-logout {
+    background: #e74c3c;
+    color: white;
+}
+
+.btn-logout:hover {
+    background: #c0392b;
+}
+
+.user-menu {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.username {
+    color: #ecf0f1;
+    font-weight: 500;
+}
+
+.logout-form {
+    margin: 0;
+    padding: 0;
+    display: inline;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .navbar-container {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .navbar-menu {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .navbar-right {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .navbar-search {
+        width: 100%;
+    }
+    
+    .navbar-search input {
+        flex: 1;
+    }
+    
+    .auth-links {
+        justify-content: center;
+        width: 100%;
+    }
+}
+</style>

@@ -1,0 +1,21 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<h1> This is all rooms page </h1>
+<style>
+    .room-link { display: block; margin: 8px 0; padding: 6px 0; text-decoration: none; color: inherit; }
+    .room-link:hover { text-decoration: underline; }
+</style>
+   
+    {% for room in rooms %}
+        <a class="room-link" href="{% url 'room' room.id %}">Go to Room {{ room.name }}</a>
+        
+    {% endfor %}
+           
+  
+   
+</div>      
+
+
+{% endblock content %}

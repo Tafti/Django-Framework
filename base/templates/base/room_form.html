@@ -1,0 +1,21 @@
+{% extends 'main.html' %}
+
+
+
+
+
+
+{% block content %}
+
+<div>   
+    <h1> This is room form page </h1>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}             
+
+        <button type="submit"> sumbit Room </button>
+    </form>
+    
+</div>
+
+{% endblock content %}

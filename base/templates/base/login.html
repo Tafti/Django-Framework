@@ -1,0 +1,32 @@
+{% extends 'main.html' %}
+
+{% block content %}
+{% if user.is_authenticated %}
+    <div style="text-align: center; padding: 50px;">
+        <h1>Welcome, {{ user.username }}!</h1>
+        <form action="{% url 'logout' %}" method="POST">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+        </form>
+        <p>or</p>
+        <a href="{% url 'home' %}">Go to Homepage</a>
+    </div>
+{% else %}
+    <form method="POST">
+        {% csrf_token %}
+        <h1>Login</h1>
+        
+        {% if messages %}
+            {% for message in messages %}
+                <div style="color: red; background: #ffe6e6; padding: 10px;">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        
+        <input type="text" name="username" placeholder="Username" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <button type="submit">Submit</button>
+    </form>
+{% endif %}
+{% endblock content %}
