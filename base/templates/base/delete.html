@@ -17,7 +17,7 @@
         <p><strong>Created:</strong> {{ room.created }}</p>
         <p><strong>Updated:</strong> {{ room.updated }}</p>
     </div>
-    {% if rooms|length == 0 %}
+    {% if room|length == 0 %}
     <p>No rooms found.</p>
     {% endif %}
     <p>Are you sure you want to delete this room?</p>

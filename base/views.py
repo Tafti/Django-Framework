@@ -27,21 +27,26 @@ def login(request):
         
         if user is not None:
             # Login successful
-            auth_login(request, user)  # Note: using auth_login to avoid naming conflict
-            messages.success(request, f"Welcome back, {user.username}!")
+            auth_login(request, user)  
+            if request.user.is_authenticated:
+                messages.success(request, f"Welcome back, {user.username}!")
             return redirect('home')
         else:
             # Login failed
             messages.error(request, "Invalid username or password.")
             return render(request, 'base/login.html')
-    return render(request, 'base/login.html')  # ← THIS WAS MISSING!
+    return render(request, 'base/login.html')  
 
 
 def logout_view(request):
     if request.method == 'POST':
+        storage = messages.get_messages(request)
+        storage.used = True  
+    
         logout(request)
-        return redirect('login')  # or 'home'
-    # If GET request, redirect to home or show confirmation
+        messages.success(request, "You have been successfully logged out.")
+        return redirect('login')  
+    
     return redirect('home')
 
 def home(request):
