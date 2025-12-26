@@ -1,13 +1,49 @@
 {% extends 'main.html' %}
+{% load static %}  
 
 {% block content %}
 
-<h1> This is room page </h1>
+<h1> This is roomid: {{ room.id }}  </h1>
+
+{% if room.image and room.image.name %}
+    <!-- Actually has an uploaded image -->
+    <img src="{{ room.image.url }}" alt="{{ room.name }}" class="room-image">
+{% else %}
+    <!-- No uploaded image -->
+    <img src="{% static 'images/default_room.jpg' %}" alt="Default room image">
+{% endif %}
+
 <div>
 
-            <a href="{% url 'room' room.id %}"> Room {{ room.id }} is about ::: {{ room.description }} </a>
+            <h2>{{ room.host }}</h2>
+            <h3>{{ room.name }}</h3>
+           <h4>{{ room.description }}</h4>
+
+           {% for comment in comments %}
+                <p>{{ comment.user }}: {{ comment.body }} </p>
+           {% endfor %}
 
 </div>      
+{% if request.user.is_authenticated %}
+<div class = "comment-form">
+    <form method="POST" action = "">
+        {% csrf_token %}
+        <textarea name="body" cols="30" rows="5" placeholder="Add a comment..."></textarea>
+        <button type="submit">Send</button>
+    </form>
+</div>
+{% else %}
+    <h3>Please <a href="{% url 'login' %}">login</a> to post a comment.</h3>
+{% endif %}
 
+
+<div>
+
+    {% for participant in participants %}
+
+        <h5>{{ participant.username }}</h5>
+
+    {% endfor %}
+</div>
 
 {% endblock content %}

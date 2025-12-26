@@ -8,11 +8,18 @@ from django.contrib.auth.models import User
 
 
 
-class RoomForm(ModelForm):
+# class RoomForm(ModelForm):
+#     class Meta:
+#         model = Room
+#         fields = '__all__'  # or specify fields like ['name', 'description']    
+
+class RoomForm(forms.ModelForm):
     class Meta:
         model = Room
-        fields = '__all__'  # or specify fields like ['name', 'description']    
-
+        fields = ['name', 'description', 'topic', 'image']  
+        widgets = {
+            'image': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+        }
 
 
 
@@ -36,3 +43,13 @@ class CustomUserCreationForm(UserCreationForm):
         if User.objects.filter(email=email).exists():
             raise forms.ValidationError("This email is already registered.")
         return email        
+    
+
+
+class UserForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['email']  
+        widgets = {
+            'image': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+        }

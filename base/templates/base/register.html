@@ -18,19 +18,7 @@
         <form method="POST" class="register-form">
             {% csrf_token %}
             
-            <!-- Username Field -->
-            <div class="form-group">
-                <label for="{{ form.username.id_for_label }}">Username</label>
-                {{ form.username }}
-                {% if form.username.errors %}
-                    <div class="error-list">
-                        {% for error in form.username.errors %}
-                            <span class="error">{{ error }}</span>
-                        {% endfor %}
-                    </div>
-                {% endif %}
-                <small class="form-text">Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</small>
-            </div>
+          
             
             <!-- Email Field -->
             <div class="form-group">

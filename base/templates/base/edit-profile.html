@@ -1,0 +1,25 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+<div class="edit-profile-container">
+    <h2>edit profile</h2>
+    
+    <form method="POST" action="" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="{{ form.email.id_for_label }}">Email:</label>
+            {{ form.email }}
+            {% if form.email.errors %}
+                <div class="error">{{ form.email.errors }}</div>
+            {% endif %}
+        </div>
+        
+        
+        <button type="submit" class="btn btn-primary">edit profile</button>
+        <a href="{% url 'home' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+
+{% endblock %}
